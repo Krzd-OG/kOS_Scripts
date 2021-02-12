@@ -35,8 +35,9 @@ PRINT "... 0 - Realeasing Launch clamps".
 STAGE.
 LOCK THROTTLE TO 1.0.
 
+PRINT "".
 PRINT "========== LIFTOFF! ==========".
-WAIT 1.
+WAIT 2.
 CLEARSCREEN.
 
 WAIT UNTIL SHIP:ALTITUDE > 1000.
