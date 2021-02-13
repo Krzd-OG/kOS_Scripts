@@ -96,8 +96,8 @@ UNTIL SHIP:APOAPSIS > 85000 {
 
 CLEARSCREEN.
 PRINT "Engaging Orbital injection".
-UNTIL SHIP:APOAPSIS > 75000 {
-  //Do Orbit.
+UNTIL SHIP:PERIAPSIS > 75000 {
+  //Do Orbit. Something with time to apo (TTA) vs. TTP
 }.
 
 WAIT UNTIL false.
