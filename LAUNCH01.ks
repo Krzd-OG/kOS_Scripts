@@ -95,7 +95,7 @@ UNTIL SHIP:APOAPSIS > 85000 {
 }.
 
 CLEARSCREEN.
-PRINT "Engaging Orbital injection"
+PRINT "Engaging Orbital injection".
 UNTIL SHIP:APOAPSIS > 75000 {
   //Do Orbit.
 }.
