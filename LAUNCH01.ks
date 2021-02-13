@@ -46,6 +46,7 @@ LOCK THROTTLE TO 0.8.
 //Staging command when 0 thrust is detected
 WHEN MAXTHRUST = 0 AND THROTTLE > 0.0 THEN {
     PRINT "Staging".
+    LOCK STEERING to SHIP:HEADING.
     STAGE.
     WAIT 0.5.
     PRESERVE. //Keep checking this statement even after executing it once.
@@ -82,22 +83,6 @@ UNTIL APOAPSIS > 75000 {
     PRINT "Heading set to 90,20" AT(0,0).
   }
 }.
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 WAIT UNTIL SHIP:ALTITUDE > 70000.
