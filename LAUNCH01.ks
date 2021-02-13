@@ -46,9 +46,11 @@ LOCK THROTTLE TO 0.8.
 //Staging command when 0 thrust is detected
 WHEN MAXTHRUST = 0 AND THROTTLE > 0.0 THEN {
     PRINT "Staging".
-    LOCK STEERING to SHIP:HEADING.
+    LOCK STEERING to SHIP:PROGRADE:VECTOR.
+    RCS ON.
     STAGE.
     WAIT 0.5.
+    RCS OFF.
     PRESERVE. //Keep checking this statement even after executing it once.
 }.
 
@@ -59,7 +61,10 @@ LOCK STEERING TO HEADING(90,90). //Locks steering to Heading+Degrees above horiz
 //Acent profile control
 PRINT "Engaging GravityTurn".
 UNTIL APOAPSIS > 75000 {
-  IF SHIP:VELOCITY:SURFACE:MAG > 200 AND SHIP:VELOCITY:SURFACE:MAG < 300 {
+  IF SHIP:APOAPSIS > 75000 AND SHIP:APOAPSIS < 85000 AND SHIP:PERIAPSIS < 70000 {
+    LOCK STEERING TO HEADING(90,-5).
+    PRINT "Heading set to 90,-5" AT(0,0).
+  } ELSE IF SHIP:VELOCITY:SURFACE:MAG > 200 AND SHIP:VELOCITY:SURFACE:MAG < 300 {
     //Sets heading if inside specific velocity-above-surface range
     LOCK STEERING TO HEADING(90,80).
     PRINT "Heading set to 90,80" AT(0,0).
@@ -85,4 +90,4 @@ UNTIL APOAPSIS > 75000 {
 }.
 
 
-WAIT UNTIL SHIP:ALTITUDE > 70000.
+WAIT UNTIL SHIP:PERIAPSIS > 70000.
