@@ -131,7 +131,7 @@ FUNCTION orbitalInjection {
     LOCK THROTTLE TO 0.0.
     //drift until ((whatever dV needed to get PERIAPSIS above 70000)/MAXTHRUST) before APOAPSIS
     //via Manouver node?
-
+    WAIT 0.1.
   }.
   CLEARSCREEN.
 }.
