@@ -6,18 +6,14 @@ SET plannedPeri TO 80000.
 SET inclanation TO 0.
 SET plannedHeading TO 90. //calculate from inclanation
 
-//=== === === STUFF === === ===
+//=== === === MAIN === === ===
 
 //IF ALREADY IN FLIGHT, SKIP THE COUNTDOWN
-//Get Mission time? -> Workaround Get ALTITUDE?
-IF SHIP:ALTITUDE < 100 {
+IF SHIP:ALTITUDE < 100 { //Launch pad ALTITUDE is around 80m
   countdown().
 } ELSE {
   PRINT "COUNTDOWN SKIPPED!".
 }.
-
-WAIT UNTIL SHIP:ALTITUDE > 1000.
-LOCK THROTTLE TO 0.8.
 
 //Staging command when 0 thrust is detected
 WHEN MAXTHRUST = 0 AND THROTTLE > 0.0 THEN {
@@ -25,15 +21,26 @@ WHEN MAXTHRUST = 0 AND THROTTLE > 0.0 THEN {
   LOCK STEERING to SHIP:PROGRADE:VECTOR.
   RCS ON.
   STAGE.
-  WAIT 1.
+  WAIT 0.5.
   RCS OFF.
   PRINT "          " AT(5,0). //remove "Staging" output
-  PRESERVE. //Keep checking this statement even after executing it once.
+  IF SHIP:STAGENUM > 1 {
+    PRESERVE. //Keep checking this statement even after executing it once.
+  }.
 }.
 
-//WAIT UNTIL SHIP:ALTITUDE > 10000.
-LOCK THROTTLE TO 1.0.
-LOCK STEERING TO HEADING(90,90). //Locks steering to Heading+Degrees above horizon
+WHEN SHIP:ALTITUDE > 70000 THEN {
+  AG9. //when in vacuum, toggle ActionGroup 9 (Fairing, SolarPanel, and Antenna deployment)
+}
+
+PRINT "Proceding until above 1000 m...".
+WAIT UNTIL SHIP:ALTITUDE > 1000.
+LOCK THROTTLE TO 0.9.
+CLEARSCREEN.
+
+gravityTurn().
+
+orbitalInjection().
 
 
 //=== === === FUNCTIONS === === ===
@@ -120,7 +127,10 @@ FUNCTION gravityTurn {
 FUNCTION orbitalInjection {
   PRINT "Engaging Orbital injection" AT(0,1).
   UNTIL SHIP:PERIAPSIS > plannedPeri {
-    //Do Orbit. Something with time to apo (TTA) vs. TTP
+    LOCK THROTTLE TO 0.0.
+    //drift until ((whatever dV needed to get PERIAPSIS above 70000)/MAXTHRUST) before APOAPSIS
+    //via Manouver node?
+
   }.
   CLEARSCREEN.
 }.
