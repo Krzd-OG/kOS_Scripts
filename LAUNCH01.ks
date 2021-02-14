@@ -32,7 +32,7 @@ WHEN MAXTHRUST = 0 AND THROTTLE > 0.0 THEN {
 WHEN SHIP:ALTITUDE > 60000 THEN {
   PRINT "Deploying Solar Panels and Antennas".
   AG9 on. //when in vacuum, toggle ActionGroup 9 (Fairing, SolarPanel, and Antenna deployment)
-}
+}.
 
 PRINT "Proceding until above 1000 m...".
 WAIT UNTIL SHIP:ALTITUDE > 1000.
