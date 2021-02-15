@@ -98,10 +98,13 @@ FUNCTION gravityTurn {
   PRINT "Engaging GravityTurn" AT(0,1).
   UNTIL SHIP:APOAPSIS > plannedApo {
     IF SHIP:APOAPSIS > 70000 AND SHIP:APOAPSIS < plannedApo AND SHIP:PERIAPSIS < plannedPeri {
-      SET VARsteering TO HEADING(90,-5).
-      PRINT "Heading set to 90,-5" AT(0,2).
-    } ELSE IF SHIP:VELOCITY:SURFACE:MAG > 200 AND SHIP:VELOCITY:SURFACE:MAG < 300 {
+      SET VARsteering TO HEADING(90,0).
+      PRINT "Heading set to 90,0" AT(0,2).
+    } ELSE IF SHIP:VELOCITY:SURFACE:MAG > 100 AND SHIP:VELOCITY:SURFACE:MAG < 200 {
       //Sets heading if inside specific velocity-above-surface range
+      SET VARsteering TO HEADING(90,85).
+      PRINT "Heading set to 90,85" AT(0,2).
+    } ELSE IF SHIP:VELOCITY:SURFACE:MAG > 200 AND SHIP:VELOCITY:SURFACE:MAG < 300 {
       SET VARsteering TO HEADING(90,80).
       PRINT "Heading set to 90,80" AT(0,2).
     } ELSE IF SHIP:VELOCITY:SURFACE:MAG > 300 AND SHIP:VELOCITY:SURFACE:MAG < 400 {
