@@ -44,6 +44,7 @@ LOCK THROTTLE TO 0.875.
 CLEARSCREEN.
 
 gravityTurn().
+UNLOCK HEADING.
 
 orbitalInjection().
 
@@ -132,11 +133,23 @@ FUNCTION gravityTurn {
 FUNCTION orbitalInjection {
   PRINT "Engaging Orbital injection" AT(0,1).
   UNTIL SHIP:PERIAPSIS > plannedPeri {
+    //Need to figure out the order of this out
     LOCK THROTTLE TO 0.0.
-    //drift until ((whatever dV needed to get PERIAPSIS above 70000)/MAXTHRUST) before APOAPSIS
-    //via Manouver node?
-    WAIT 0.1.
+    IF SHIP:OBT:ETA:APOAPSIS > SHIP:OBT:ETA:PERIAPSIS AND SHIP:PERIAPSIS < 70000 { //missed the APOAPSIS! (both return time in seconds)
+      PRINT "Missed the APOAPSIS, Emergency correction Burn commencing".
+      UNTIL SHIP:PERIAPSIS > 70000 {
+        RCS ON.
+        SET VARsteering TO HEADING(90,20). //WHY ARE YOU NOT WORKING??
+        WAIT 0.2.
+        LOCK THROTTLE TO 1.0.
+        WAIT 0.
+      }.
+    }.
+    RCS OFF.
+    WAIT 0.1. //to keep it from endlessly looping and just destroying performance
   }.
+  //drift until ((whatever dV needed to get PERIAPSIS above 70000)/MAXTHRUST) before APOAPSIS
+
   CLEARSCREEN.
 }.
 
