@@ -32,9 +32,12 @@ WHEN MAXTHRUST = 0 AND THROTTLE > 0.0 THEN {
   }.
 }.
 
-WHEN SHIP:ALTITUDE > 60000 THEN {
+WHEN SHIP:ALTITUDE > 60000 AND THROTTLE > 0.0 THEN {
   PRINT "Deploying Solar Panels and Antennas".
-  AG9 on. //when in vacuum, toggle ActionGroup 9 (Fairing, SolarPanel, and Antenna deployment)
+  WAIT 0.2.
+  AG9 on. //when in vacuum, toggle ActionGroup 9 (deploy Fairing)
+  WAIT 1.0.
+  AG8 on. //toggle solar panel and antennas
 }.
 
 PRINT "Proceding until above 200 m...".
@@ -139,7 +142,7 @@ FUNCTION orbitalInjection {
     //Need to figure out the order of this out
     LOCK THROTTLE TO 0.0.
     IF SHIP:OBT:ETA:APOAPSIS > SHIP:OBT:ETA:PERIAPSIS AND SHIP:PERIAPSIS < 70000 { //missed the APOAPSIS! (both return time in seconds)
-      PRINT "Missed the APOAPSIS, Emergency correction Burn commencing".
+      PRINT "WARNING: Missed the APOAPSIS, commencing correction burn".
       UNTIL SHIP:PERIAPSIS > 70000 {
         RCS ON.
         SET VARsteering TO HEADING(90,20). //WHY ARE YOU NOT WORKING??
