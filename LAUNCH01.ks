@@ -149,6 +149,12 @@ FUNCTION orbitalInjection {
         WAIT 0.2.
         LOCK THROTTLE TO 1.0.
         WAIT 0.
+        IF SHIP:OBT:ETA:APOAPSIS < SHIP:OBT:ETA:PERIAPSIS AND SHIP:PERIAPSIS < 70000 {
+          WAIT 0.5. //continue thrust for 0.5 sec
+          LOCK THROTTLE TO 0.0.
+          WAIT 5.0.
+          orbitalInjection().
+        }.
       }.
     }.
     RCS OFF.
