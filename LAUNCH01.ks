@@ -37,6 +37,8 @@ WHEN SHIP:ALTITUDE > 60000 THEN {
   AG9 on. //when in vacuum, toggle ActionGroup 9 (Fairing, SolarPanel, and Antenna deployment)
 }.
 
+PRINT "Proceding until above 200 m...".
+WAIT UNTIL SHIP:ALTITUDE > 200.
 LOCK VARsteering TO HEADING(90,90). //rotate to prepare for gravity turn
 LOCK THROTTLE TO 0.875.
 CLEARSCREEN.
