@@ -42,7 +42,7 @@ WHEN SHIP:ALTITUDE > 60000 AND THROTTLE > 0.0 THEN {
 
 PRINT "Proceding until above 200 m...".
 WAIT UNTIL SHIP:ALTITUDE > 200.
-LOCK VARsteering TO HEADING(90,90). //rotate to prepare for gravity turn
+LOCK VARsteering TO HEADING(plannedHeading,90). //rotate to prepare for gravity turn
 LOCK THROTTLE TO 0.875.
 CLEARSCREEN.
 
@@ -101,36 +101,36 @@ FUNCTION gravityTurn {
   PRINT "Engaging GravityTurn" AT(0,1).
   UNTIL SHIP:APOAPSIS > plannedApo {
     IF SHIP:APOAPSIS > 70000 AND SHIP:APOAPSIS < plannedApo AND SHIP:PERIAPSIS < plannedPeri {
-      SET VARsteering TO HEADING(90,0).
-      PRINT "Heading set to 90,0" AT(0,2).
+      SET VARsteering TO HEADING(plannedHeading,0).
+      PRINT "Heading set to " + plannedHeading + ",0" AT(0,2).
     } ELSE IF SHIP:VELOCITY:SURFACE:MAG > 100 AND SHIP:VELOCITY:SURFACE:MAG < 200 {
       //Sets heading if inside specific velocity-above-surface range
-      SET VARsteering TO HEADING(90,85).
-      PRINT "Heading set to 90,85" AT(0,2).
+      SET VARsteering TO HEADING(plannedHeading,85).
+      PRINT "Heading set to " + plannedHeading + ",85" AT(0,2).
     } ELSE IF SHIP:VELOCITY:SURFACE:MAG > 200 AND SHIP:VELOCITY:SURFACE:MAG < 300 {
-      SET VARsteering TO HEADING(90,80).
-      PRINT "Heading set to 90,80" AT(0,2).
+      SET VARsteering TO HEADING(plannedHeading,80).
+      PRINT "Heading set to " + plannedHeading + ",80" AT(0,2).
     } ELSE IF SHIP:VELOCITY:SURFACE:MAG > 300 AND SHIP:VELOCITY:SURFACE:MAG < 400 {
-      SET VARsteering TO HEADING(90,70).
-      PRINT "Heading set to 90,70" AT(0,2).
+      SET VARsteering TO HEADING(plannedHeading,70).
+      PRINT "Heading set to " + plannedHeading + ",70" AT(0,2).
     } ELSE IF SHIP:VELOCITY:SURFACE:MAG > 400 AND SHIP:VELOCITY:SURFACE:MAG < 500 {
-      SET VARsteering TO HEADING(90,60).
-      PRINT "Heading set to 90,60" AT(0,2).
+      SET VARsteering TO HEADING(plannedHeading,60).
+      PRINT "Heading set to " + plannedHeading + ",60" AT(0,2).
     } ELSE IF SHIP:VELOCITY:SURFACE:MAG > 500 AND SHIP:VELOCITY:SURFACE:MAG < 600 {
-      SET VARsteering TO HEADING(90,50).
-      PRINT "Heading set to 90,50" AT(0,2).
+      SET VARsteering TO HEADING(plannedHeading,50).
+      PRINT "Heading set to " + plannedHeading + ",50" AT(0,2).
     } ELSE IF SHIP:VELOCITY:SURFACE:MAG > 600 AND SHIP:VELOCITY:SURFACE:MAG < 700 {
-      SET VARsteering TO HEADING(90,40).
-      PRINT "Heading set to 90,40" AT(0,2).
+      SET VARsteering TO HEADING(plannedHeading,40).
+      PRINT "Heading set to " + plannedHeading + ",40" AT(0,2).
     } ELSE IF SHIP:VELOCITY:SURFACE:MAG > 700 AND SHIP:VELOCITY:SURFACE:MAG < 800 {
-      SET VARsteering TO HEADING(90,30).
-      PRINT "Heading set to 90,30" AT(0,2).
+      SET VARsteering TO HEADING(plannedHeading,30).
+      PRINT "Heading set to " + plannedHeading + ",30" AT(0,2).
     } ELSE IF SHIP:VELOCITY:SURFACE:MAG > 800 AND SHIP:VELOCITY:SURFACE:MAG < 900 {
-      SET VARsteering TO HEADING(90,20).
-      PRINT "Heading set to 90,20" AT(0,2).
+      SET VARsteering TO HEADING(plannedHeading,20).
+      PRINT "Heading set to " + plannedHeading + ",20" AT(0,2).
     } ELSE IF SHIP:VELOCITY:SURFACE:MAG > 900 AND SHIP:ALTITUDE > 50000 {
-      SET VARsteering TO HEADING(90,0).
-      PRINT "Heading set to 90,0" AT(0,2).
+      SET VARsteering TO HEADING(plannedHeading,0).
+      PRINT "Heading set to " + plannedHeading + ",0" AT(0,2).
     }.
   }.
   CLEARSCREEN.
@@ -145,7 +145,7 @@ FUNCTION orbitalInjection {
       PRINT "WARNING: Missed the APOAPSIS, commencing correction burn".
       UNTIL SHIP:PERIAPSIS > 70000 {
         RCS ON.
-        SET VARsteering TO HEADING(90,20). //WHY ARE YOU NOT WORKING??
+        SET VARsteering TO HEADING(plannedHeading,20). //WHY ARE YOU NOT WORKING??
         WAIT 0.2.
         LOCK THROTTLE TO 1.0.
         WAIT 0.
