@@ -21,7 +21,7 @@ IF SHIP:ALTITUDE < 100 { //Launch pad ALTITUDE is around 80m
 //Staging command when 0 thrust is detected
 WHEN MAXTHRUST = 0 AND THROTTLE > 0.0 THEN {
   PRINT "Staging..." AT(5,0).
-  SET VARsteering TO SHIP:PROGRADE:VECTOR.
+  //SET VARsteering TO SHIP:PROGRADE:VECTOR.
   RCS ON.
   STAGE.
   WAIT 0.5.
@@ -103,32 +103,53 @@ FUNCTION gravityTurn {
     IF SHIP:APOAPSIS > 70000 AND SHIP:APOAPSIS < plannedApo AND SHIP:PERIAPSIS < plannedPeri {
       SET VARsteering TO HEADING(plannedHeading,0).
       PRINT "Heading set to " + plannedHeading + ",0" AT(0,2).
-    } ELSE IF SHIP:VELOCITY:SURFACE:MAG > 100 AND SHIP:VELOCITY:SURFACE:MAG < 200 {
+    } ELSE IF SHIP:VELOCITY:SURFACE:MAG > 100 AND SHIP:VELOCITY:SURFACE:MAG < 150 {
       //Sets heading if inside specific velocity-above-surface range
       SET VARsteering TO HEADING(plannedHeading,85).
       PRINT "Heading set to " + plannedHeading + ",85" AT(0,2).
-    } ELSE IF SHIP:VELOCITY:SURFACE:MAG > 200 AND SHIP:VELOCITY:SURFACE:MAG < 300 {
+    } ELSE IF SHIP:VELOCITY:SURFACE:MAG > 150 AND SHIP:VELOCITY:SURFACE:MAG < 200 {
       SET VARsteering TO HEADING(plannedHeading,80).
       PRINT "Heading set to " + plannedHeading + ",80" AT(0,2).
-    } ELSE IF SHIP:VELOCITY:SURFACE:MAG > 300 AND SHIP:VELOCITY:SURFACE:MAG < 400 {
+    } ELSE IF SHIP:VELOCITY:SURFACE:MAG > 200 AND SHIP:VELOCITY:SURFACE:MAG < 300 {
+      SET VARsteering TO HEADING(plannedHeading,75).
+      PRINT "Heading set to " + plannedHeading + ",75" AT(0,2).
+    } ELSE IF SHIP:VELOCITY:SURFACE:MAG > 300 AND SHIP:VELOCITY:SURFACE:MAG < 350 {
       SET VARsteering TO HEADING(plannedHeading,70).
       PRINT "Heading set to " + plannedHeading + ",70" AT(0,2).
-    } ELSE IF SHIP:VELOCITY:SURFACE:MAG > 400 AND SHIP:VELOCITY:SURFACE:MAG < 500 {
+    } ELSE IF SHIP:VELOCITY:SURFACE:MAG > 350 AND SHIP:VELOCITY:SURFACE:MAG < 400 {
+      SET VARsteering TO HEADING(plannedHeading,65).
+      PRINT "Heading set to " + plannedHeading + ",65" AT(0,2).
+    } ELSE IF SHIP:VELOCITY:SURFACE:MAG > 450 AND SHIP:VELOCITY:SURFACE:MAG < 500 {
       SET VARsteering TO HEADING(plannedHeading,60).
       PRINT "Heading set to " + plannedHeading + ",60" AT(0,2).
     } ELSE IF SHIP:VELOCITY:SURFACE:MAG > 500 AND SHIP:VELOCITY:SURFACE:MAG < 600 {
+      SET VARsteering TO HEADING(plannedHeading,55).
+      PRINT "Heading set to " + plannedHeading + ",55" AT(0,2).
+    } ELSE IF SHIP:VELOCITY:SURFACE:MAG > 600 AND SHIP:VELOCITY:SURFACE:MAG < 700 {
       SET VARsteering TO HEADING(plannedHeading,50).
       PRINT "Heading set to " + plannedHeading + ",50" AT(0,2).
-    } ELSE IF SHIP:VELOCITY:SURFACE:MAG > 600 AND SHIP:VELOCITY:SURFACE:MAG < 700 {
+    } ELSE IF SHIP:VELOCITY:SURFACE:MAG > 700 AND SHIP:VELOCITY:SURFACE:MAG < 750 {
+      SET VARsteering TO HEADING(plannedHeading,45).
+      PRINT "Heading set to " + plannedHeading + ",45" AT(0,2).
+    } ELSE IF SHIP:VELOCITY:SURFACE:MAG > 750 AND SHIP:VELOCITY:SURFACE:MAG < 800 {
       SET VARsteering TO HEADING(plannedHeading,40).
       PRINT "Heading set to " + plannedHeading + ",40" AT(0,2).
-    } ELSE IF SHIP:VELOCITY:SURFACE:MAG > 700 AND SHIP:VELOCITY:SURFACE:MAG < 800 {
+    } ELSE IF SHIP:VELOCITY:SURFACE:MAG > 800 AND SHIP:VELOCITY:SURFACE:MAG < 850 {
+      SET VARsteering TO HEADING(plannedHeading,35).
+      PRINT "Heading set to " + plannedHeading + ",35" AT(0,2).
+    } ELSE IF SHIP:VELOCITY:SURFACE:MAG > 850 AND SHIP:VELOCITY:SURFACE:MAG < 900 {
       SET VARsteering TO HEADING(plannedHeading,30).
       PRINT "Heading set to " + plannedHeading + ",30" AT(0,2).
-    } ELSE IF SHIP:VELOCITY:SURFACE:MAG > 800 AND SHIP:VELOCITY:SURFACE:MAG < 900 {
+    } ELSE IF SHIP:VELOCITY:SURFACE:MAG > 900 AND SHIP:VELOCITY:SURFACE:MAG < 950 {
+      SET VARsteering TO HEADING(plannedHeading,25).
+      PRINT "Heading set to " + plannedHeading + ",25" AT(0,2).
+    } ELSE IF SHIP:VELOCITY:SURFACE:MAG > 950 AND SHIP:VELOCITY:SURFACE:MAG < 1000 {
       SET VARsteering TO HEADING(plannedHeading,20).
       PRINT "Heading set to " + plannedHeading + ",20" AT(0,2).
-    } ELSE IF SHIP:VELOCITY:SURFACE:MAG > 900 AND SHIP:ALTITUDE > 50000 {
+    } ELSE IF SHIP:VELOCITY:SURFACE:MAG > 1000 AND SHIP:VELOCITY:SURFACE:MAG < 1050 {
+      SET VARsteering TO HEADING(plannedHeading,15).
+      PRINT "Heading set to " + plannedHeading + ",15" AT(0,2).
+    } ELSE IF SHIP:VELOCITY:SURFACE:MAG > 1050 AND SHIP:ALTITUDE > 50000 {
       SET VARsteering TO HEADING(plannedHeading,0).
       PRINT "Heading set to " + plannedHeading + ",0" AT(0,2).
     }.
@@ -145,7 +166,7 @@ FUNCTION orbitalInjection {
       PRINT "WARNING: Missed the APOAPSIS, commencing correction burn".
       UNTIL SHIP:PERIAPSIS > 70000 {
         RCS ON.
-        SET VARsteering TO HEADING(plannedHeading,20). //WHY ARE YOU NOT WORKING??
+        SET VARsteering TO HEADING(plannedHeading,20).
         WAIT 0.2.
         LOCK THROTTLE TO 1.0.
         WAIT 0.
@@ -165,7 +186,7 @@ FUNCTION orbitalInjection {
   CLEARSCREEN.
 }.
 
-WAIT UNTIL false.
+WAIT UNTIL SHIP:PERIAPSIS > plannedPeri.
 CLEARSCREEN.
 PRINT "EOF reached".
 LOCK THROTTLE TO 0.
